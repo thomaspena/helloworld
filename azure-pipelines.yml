@@ -10,22 +10,11 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-# Tarea de Build
-- task: Maven@4
-  inputs:
-    mavenPomFile: 'pom.xml'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    javaHomeOption: 'JDKVersion'
-    mavenVersionOption: 'Default'
-    mavenAuthenticateFeed: false
-    effectivePomSkip: false
-    sonarQubeRunAnalysis: true
-    sqMavenPluginVersionChoice: 'latest'
+
     
-# Tarea de Test
+# Task  Build and Unit Test
 - task: Maven@3
-  displayName: 'Run Unit Tests'
+  displayName: 'Run Build and Unit Tests'
   inputs:
     mavenPomFile: 'pom.xml'
     mavenOptions: '-Xmx3072m'
@@ -56,3 +45,18 @@ steps:
 #    testResultsFormat: 'JUnit'
 #    testResultsFiles: 'dependency-check\*junit.xml'
 #    searchFolder: '$(Common.TestResultsDirectory)'
+
+- task: Maven@3
+  displayName: 'Dependency Check'
+  inputs:
+    mavenPomFile: 'pom.xml'
+    mavenOptions: '-Xmx3072m'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.8'
+    jdkArchitectureOption: 'x64'
+    goals: 'org.owasp:dependency-check-maven:check'
+- task: PublishPipelineArtifact@1
+  displayName: 'Publish Dependency Check Report'
+  inputs:
+    targetPath: 'target/dependency-check-report.html'
+    artifactName: 'DependencyCheckReport'
