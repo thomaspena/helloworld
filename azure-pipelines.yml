@@ -7,7 +7,7 @@ trigger:
 - master
 
 pool:
-  name: PruebaTecnica
+  vmImage: 'ubuntu-latest'
 
 steps:
 
@@ -63,14 +63,14 @@ steps:
 
 - task: SonarQubePrepare@6
   inputs:
-    SonarQube: 'SonarQubeAnalisis'
+    SonarQube: 'PruebaTecnica'
     scannerMode: 'Other'
     extraProperties: |
-      # Additional properties that will be passed to the scanner,
-      # Put one key=value per line, example:
-      # sonar.exclusions=**/*.bin
-      sonar.projectKey=PruebaTecnicaSmartTalent_PruebaTecnicaSmartTalent_AZDNCBUxfJ3QwYseCTUl
-      sonar.projectName=PruebaTecnicaSmartTalent
+      # Propiedades adicionales que se pasarán al escáner, 
+      # Coloque una clave=valor por línea, ejemplo: 
+      # sonar.exclusions=**/*.bin 
+      sonar.projectKey = PruebaTecnica_PruebaTecnica_AZDNOPrDa3Xf3DH7xVnz 
+      sonar.projectName = PruebaTecnica
 - task: SonarQubePublish@6
   inputs:
     pollingTimeoutSec: '300'
