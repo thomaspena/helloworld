@@ -84,6 +84,9 @@ steps:
       sonar.host.url=http://localhost:7000
       sonar.projectKey = PruebaTecnica_PruebaTecnica_AZDNOPrDa3Xf3DH7xVnz 
       sonar.projectName = PruebaTecnica
+- task: SonarQubeAnalyze@6
+  inputs:
+    jdkversion: 'JAVA_HOME_17_X64'
 - task: SonarQubePublish@6
   inputs:
     pollingTimeoutSec: '300'
