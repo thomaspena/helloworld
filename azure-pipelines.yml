@@ -40,3 +40,16 @@ steps:
   inputs:
     targetPath: 'target/site/surefire-report.html'
     artifactName: 'TestReport'
+
+
+- task: dependency-check-build-task@6
+  inputs:
+    projectName: 'thomaspena.helloworld'
+    scanPath: '$(System.DefaultWorkingDirectory)'
+    format: 'HTML, JUNIT, XML'          
+- task: PublishTestResults@2
+  displayName: Publish Dependency Check Test Results
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: 'dependency-check\*junit.xml'
+    searchFolder: '$(Common.TestResultsDirectory)'
