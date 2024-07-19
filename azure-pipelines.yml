@@ -81,6 +81,7 @@ steps:
       # Propiedades adicionales que se pasarán al escáner, 
       # Coloque una clave=valor por línea, ejemplo: 
       # sonar.exclusions=**/*.bin 
+      sonar.host.url=http://localhost:7000
       sonar.projectKey = PruebaTecnica_PruebaTecnica_AZDNOPrDa3Xf3DH7xVnz 
       sonar.projectName = PruebaTecnica
 - task: SonarQubePublish@6
