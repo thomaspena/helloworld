@@ -13,17 +13,17 @@ steps:
 
     
 # Task  Build and Unit Test
-- task: Maven@3
-  displayName: 'Run Build and Unit Tests'
+- task: Maven@4
   inputs:
     mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.8'
-    jdkArchitectureOption: 'x64'
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'test surefire-report:report-only'
+    javaHomeOption: 'JDKVersion'
+    mavenVersionOption: 'Default'
+    mavenAuthenticateFeed: false
+    effectivePomSkip: false
+    sonarQubeRunAnalysis: true
+    sqMavenPluginVersionChoice: 'latest'
 
 # Publicar Artefactos HTML
 - task: PublishPipelineArtifact@1
@@ -46,17 +46,33 @@ steps:
 #    testResultsFiles: 'dependency-check\*junit.xml'
 #    searchFolder: '$(Common.TestResultsDirectory)'
 
-- task: Maven@3
-  displayName: 'Dependency Check'
-  inputs:
-    mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.8'
-    jdkArchitectureOption: 'x64'
-    goals: 'org.owasp:dependency-check-maven:check'
+#- task: Maven@3
+#  displayName: 'Dependency Check'
+#  inputs:
+#    mavenPomFile: 'pom.xml'
+#    mavenOptions: '-Xmx3072m'
+#    javaHomeOption: 'JDKVersion'
+#    jdkVersionOption: '1.8'
+#    jdkArchitectureOption: 'x64'
+#    goals: 'org.owasp:dependency-check-maven:check'
 - task: PublishPipelineArtifact@1
   displayName: 'Publish Dependency Check Report'
   inputs:
     targetPath: 'target/dependency-check-report.html'
     artifactName: 'DependencyCheckReport'
+
+- task: SonarQubePrepare@6
+  inputs:
+    SonarQube: 'SonarQubeAnalisis'
+    scannerMode: 'Other'
+    extraProperties: |
+      # Additional properties that will be passed to the scanner,
+      # Put one key=value per line, example:
+      # sonar.exclusions=**/*.bin
+      sonar.projectKey=PruebaTecnicaSmartTalent_PruebaTecnicaSmartTalent_AZDNCBUxfJ3QwYseCTUl
+      sonar.projectName=PruebaTecnicaSmartTalent
+- task: SonarQubePublish@6
+  inputs:
+    pollingTimeoutSec: '300'
+
+
