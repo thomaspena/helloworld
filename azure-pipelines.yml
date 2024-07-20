@@ -25,7 +25,7 @@ steps:
     mavenVersionOption: 'Default'  # Esta opción puede ser 'Default' o especificar una versión
     mavenAuthenticateFeed: false  # Configura si es necesario autenticar el feed de Maven
     effectivePomSkip: false  # Opcional: determina si se debe omitir la generación del POM efectivo
-#    sonarQubeRunAnalysis: true
+    sonarQubeRunAnalysis: true
     sqMavenPluginVersionChoice: 'pom'  # Usa la versión del plugin definida en el POM
     goals: 'test surefire-report:report-only'  # La opción de 'goals' está disponible en Maven@4 para definir los objetivos a ejecutar
 # Publicar Artefactos HTML
@@ -35,13 +35,6 @@ steps:
     targetPath: 'target/site/surefire-report.html'
     artifactName: 'TestReport'
 
-#- task: dependency-check-build-task@6
-#  inputs:
-#    projectName: 'PruebaTest'
-#    scanPath: './pom.xml'
-#    format: 'HTML, JUNIT, XML'
-#    uploadReports: true
- # Análisis de Dependencias
 - task: Maven@4
   displayName: 'Run OWASP Dependency Check'
   inputs:
@@ -62,13 +55,18 @@ steps:
   inputs:
     targetPath: '$(Build.SourcesDirectory)/target'
     artifactName: 'DependencyCheckReport'   
-#- task: SonarQubePrepare@6
-#  inputs:
-#    SonarQube: 'PruebaTecnica'
-#    scannerMode: 'Other'
-#    extraProperties: sonar.projectKey = PruebaTecnica_PruebaTecnica_AZDNOPrDa3Xf3DH7xVnz 
-#- task: SonarQubePublish@6
-#  inputs:
-#    pollingTimeoutSec: '300'
 
 
+- task: SonarQubePrepare@6
+  inputs:
+    SonarQube: 'PruebaTecnicaSmartTalent'
+    scannerMode: 'Other'
+    extraProperties: |
+      # Additional properties that will be passed to the scanner,
+      # Put one key=value per line, example:
+      # sonar.exclusions=**/*.bin
+      sonar.projectKey=PruebaTecnica_PruebaTecnica_f0e36347-390b-4884-92fc-1b5faa31d53e
+      sonar.projectName=PruebaTecnica
+- task: SonarQubePublish@6
+  inputs:
+    pollingTimeoutSec: '300'
