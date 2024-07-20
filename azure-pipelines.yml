@@ -35,12 +35,20 @@ steps:
     targetPath: 'target/site/surefire-report.html'
     artifactName: 'TestReport'
 
-
-- task: dependency-check-build-task@6
+- task: Maven@3
+  displayName: 'Dependency Check'
   inputs:
-    projectName: 'thomaspena.helloworld'
-    scanPath: '$(System.DefaultWorkingDirectory)'
-    format: 'HTML, JUNIT, XML'          
+    mavenPomFile: 'pom.xml'
+    mavenOptions: '-Xmx3072m'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.8'
+    jdkArchitectureOption: 'x64'
+    goals: 'org.owasp:dependency-check-maven:check'
+#- task: dependency-check-build-task@6
+#  inputs:
+#    projectName: 'thomaspena.helloworld'
+#    scanPath: '$(System.DefaultWorkingDirectory)'
+#    format: 'HTML, JUNIT, XML'          
 - task: PublishTestResults@2
   displayName: Publish Dependency Check Test Results
   inputs:
