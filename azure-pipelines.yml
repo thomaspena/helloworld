@@ -3,20 +3,21 @@
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
 
-trigger:
-- master
+#trigger:
+#- master
 
 pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-
+# ETAPA DE CONSTRUCCIÓN Y EJECUCION DE PRUEBAS UNITARIAS
+# Se construye la aplicación usando Java y Maven
+# Se ejecutan las pruebas unitarias
 - task: JavaToolInstaller@0
   inputs:
     versionSpec: '17'
     jdkArchitectureOption: 'x64'
     jdkSourceOption: 'PreInstalled'
-
 - task: Maven@4
   inputs:
     mavenPomFile: 'pom.xml'
@@ -26,10 +27,17 @@ steps:
     mavenVersionOption: 'Default'  
     mavenAuthenticateFeed: false  
     effectivePomSkip: false 
-#    sonarQubeRunAnalysis: true
     sqMavenPluginVersionChoice: 'pom' 
     goals: 'test surefire-report:report-only'
 
+# Publicar Artefacto de las pruebas unitarias en HTML
+- task: PublishPipelineArtifact@1
+  displayName: 'Publish Test Report'
+  inputs:
+    targetPath: 'target/site/surefire-report.html'
+    artifactName: 'TestReport'
+
+# ETAPA DE ANALISIS CON SONARQUBE
 # Preparar análisis de SonarQube
 - task: SonarQubePrepare@6
   inputs:
@@ -40,24 +48,16 @@ steps:
     cliProjectName: 'PruebaTecnica'
     cliSources: '.'
     extraProperties: sonar.java.binaries=target/classes
-
 # Ejecutar análisis de SonarQube
 - task: SonarQubeAnalyze@6
   inputs:
     jdkversion: 'JAVA_HOME_17_X64'
-
 # Publicar resultados de SonarQube
 - task: SonarQubePublish@6
   inputs:
     pollingTimeoutSec: '300'
 
-# Publicar Artefactos HTML
-- task: PublishPipelineArtifact@1
-  displayName: 'Publish Test Report'
-  inputs:
-    targetPath: 'target/site/surefire-report.html'
-    artifactName: 'TestReport'
-
+#ETAPA ANALISIS DE DEPENDENCIAS CON DEPENDENCY CHECK
 - task: Maven@4
   displayName: 'Run OWASP Dependency Check'
   inputs:
@@ -73,6 +73,7 @@ steps:
     testResultsFiles: '**/dependency-check-report.xml'
     searchFolder: '$(Build.SourcesDirectory)'
 
+# Publicar Artefacto del analisis de dependencias en HTML
 - task: PublishPipelineArtifact@1
   displayName: 'Publish Dependency Check Report'
   inputs:
