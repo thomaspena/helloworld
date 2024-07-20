@@ -36,47 +36,31 @@ steps:
     artifactName: 'TestReport'
 
 
-#- task: dependency-check-build-task@6
-#  inputs:
-#    projectName: 'thomaspena.helloworld'
-#    scanPath: '$(System.DefaultWorkingDirectory)'
-#    format: 'HTML, JUNIT, XML'          
-
-#- task: PublishTestResults@2
-#  displayName: Publish Dependency Check Test Results
-#  inputs:
-#    testResultsFormat: 'JUnit'
-#    testResultsFiles: 'dependency-check\*junit.xml'
-#    searchFolder: '$(Common.TestResultsDirectory)'
-
-#- task: Maven@3
-#  displayName: 'Dependency Check'
-#  inputs:
-#    mavenPomFile: 'pom.xml'
-#    mavenOptions: '-Xmx3072m'
-#    javaHomeOption: 'JDKVersion'
-#    jdkVersionOption: '1.8'
-#    jdkArchitectureOption: 'x64'
-#    goals: 'org.owasp:dependency-check-maven:check'
-#- task: PublishPipelineArtifact@1
-#  displayName: 'Publish Dependency Check Report'
-#  inputs:
-#    targetPath: 'target/dependency-check-report.html'
-#    artifactName: 'DependencyCheckReport'
-
-- task: SonarQubePrepare@6
+- task: dependency-check-build-task@6
   inputs:
-    SonarQube: 'PruebaTecnica'
-    scannerMode: 'Other'
-    extraProperties: |
-      sonar.projectKey = PruebaTecnica_PruebaTecnica_AZDNOPrDa3Xf3DH7xVnz 
-      sonar.projectName = PruebaTecnica
+    projectName: 'thomaspena.helloworld'
+    scanPath: '$(System.DefaultWorkingDirectory)'
+    format: 'HTML, JUNIT, XML'          
+- task: PublishTestResults@2
+  displayName: Publish Dependency Check Test Results
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: 'dependency-check\*junit.xml'
+    searchFolder: '$(Common.TestResultsDirectory)'
 
-- task: SonarQubeAnalyze@6
-  inputs:
-    jdkversion: 'JAVA_HOME_17_X64'
-- task: SonarQubePublish@6
-  inputs:
-    pollingTimeoutSec: '300'
+#- task: SonarQubePrepare@6
+#  inputs:
+#    SonarQube: 'PruebaTecnica'
+#    scannerMode: 'Other'
+#    extraProperties: |
+#      sonar.projectKey = PruebaTecnica_PruebaTecnica_AZDNOPrDa3Xf3DH7xVnz 
+#      sonar.projectName = PruebaTecnica
+
+#- task: SonarQubeAnalyze@6
+#  inputs:
+#    jdkversion: 'JAVA_HOME_17_X64'
+#- task: SonarQubePublish@6
+#  inputs:
+#    pollingTimeoutSec: '300'
 
 
