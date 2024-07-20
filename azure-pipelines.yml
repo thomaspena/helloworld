@@ -105,4 +105,4 @@ steps:
     azureSubscription: 'ConexionDespliegue'
     appType: 'webApp'
     WebAppName: 'EntornoPrueba'
-    packageForLinux: '$(Build.ArtifactStagingDirectory)/*app.zip'
+    packageForLinux: '$(Build.ArtifactStagingDirectory)/app.zip'
