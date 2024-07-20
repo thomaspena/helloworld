@@ -35,13 +35,33 @@ steps:
     targetPath: 'target/site/surefire-report.html'
     artifactName: 'TestReport'
 
-- task: dependency-check-build-task@6
+#- task: dependency-check-build-task@6
+#  inputs:
+#    projectName: 'PruebaTest'
+#    scanPath: './pom.xml'
+#    format: 'HTML, JUNIT, XML'
+#    uploadReports: true
+ # Análisis de Dependencias
+- task: Maven@4
+  displayName: 'Run OWASP Dependency Check'
   inputs:
-    projectName: 'PruebaTest'
-    scanPath: './pom.xml'
-    format: 'HTML, JUNIT, XML'
-    uploadReports: true
-    
+    mavenPomFile: 'pom.xml'
+    goals: 'org.owasp:dependency-check-maven:check'
+    options: '-Dformat=ALL'
+
+# Publicar Resultados de Análisis de Dependencias
+- task: PublishTestResults@2
+  displayName: 'Publish Dependency Check Test Results'
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: '**/dependency-check-report.xml'
+    searchFolder: '$(Build.SourcesDirectory)'
+
+- task: PublishPipelineArtifact@1
+  displayName: 'Publish Dependency Check Report'
+  inputs:
+    targetPath: '$(Build.SourcesDirectory)/target'
+    artifactName: 'DependencyCheckReport'   
 #- task: SonarQubePrepare@6
 #  inputs:
 #    SonarQube: 'PruebaTecnica'
