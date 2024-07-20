@@ -38,7 +38,7 @@ steps:
     mavenVersionOption: 'Default'  # Esta opción puede ser 'Default' o especificar una versión
     mavenAuthenticateFeed: false  # Configura si es necesario autenticar el feed de Maven
     effectivePomSkip: false  # Opcional: determina si se debe omitir la generación del POM efectivo
-#    sonarQubeRunAnalysis: true
+    sonarQubeRunAnalysis: true
     sqMavenPluginVersionChoice: 'pom'  # Usa la versión del plugin definida en el POM
     goals: 'test surefire-report:report-only'  # La opción de 'goals' está disponible en Maven@4 para definir los objetivos a ejecutar
 # Publicar Artefactos HTML
@@ -77,26 +77,14 @@ steps:
 #    targetPath: 'target/dependency-check-report.html'
 #    artifactName: 'DependencyCheckReport'
 
-#- task: SonarQubePrepare@6
-#  inputs:
-#    SonarQube: 'PruebaTecnica'
-#    scannerMode: 'Other'
-#    extraProperties: |
-#      sonar.projectKey = PruebaTecnica_PruebaTecnica_AZDNOPrDa3Xf3DH7xVnz 
-#      sonar.projectName = PruebaTecnica
-
 - task: SonarQubePrepare@6
   inputs:
     SonarQube: 'PruebaTecnica'
-    scannerMode: 'CLI'
-    configMode: 'manual'
-    cliProjectKey: 'PruebaTecnica_PruebaTecnica_AZDNOPrDa3Xf3DH7xVnz'
-    cliProjectName: 'PruebaTecnica'
-    cliSources: '.'
+    scannerMode: 'Other'
     extraProperties: |
-        sonar.host.url=http://localhost:7000  # Asegúrate de usar la URL correcta
-        sonar.projectKey=PruebaTecnica_PruebaTecnica_AZDNOPrDa3Xf3DH7xVnz
-        sonar.projectName=PruebaTecnica
+      sonar.projectKey = PruebaTecnica_PruebaTecnica_AZDNOPrDa3Xf3DH7xVnz 
+      sonar.projectName = PruebaTecnica
+
 - task: SonarQubeAnalyze@6
   inputs:
     jdkversion: 'JAVA_HOME_17_X64'
