@@ -79,3 +79,12 @@ steps:
   inputs:
     targetPath: '$(Build.SourcesDirectory)/target'
     artifactName: 'DependencyCheckReport'
+    
+#ETAPA DESPLIEGUE ENTORNO DE PRUEBA
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'ConexionDespliegue'
+    appType: 'webApp'
+    WebAppName: 'EntornoPrueba'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
