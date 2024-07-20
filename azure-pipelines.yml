@@ -22,13 +22,13 @@ steps:
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     javaHomeOption: 'JDKVersion'
-    mavenVersionOption: 'Default'  # Esta opción puede ser 'Default' o especificar una versión
-    mavenAuthenticateFeed: false  # Configura si es necesario autenticar el feed de Maven
-    effectivePomSkip: false  # Opcional: determina si se debe omitir la generación del POM efectivo
+    mavenVersionOption: 'Default'  
+    mavenAuthenticateFeed: false  
+    effectivePomSkip: false 
     sonarQubeRunAnalysis: true
-    sqMavenPluginVersionChoice: 'pom'  # Usa la versión del plugin definida en el POM
-    goals: 'sonar:sonar'  # La opción de 'goals' está disponible en Maven@4 para definir los objetivos a ejecutar
-    #test surefire-report:report-only
+    sqMavenPluginVersionChoice: 'pom' 
+    goals: 'test surefire-report:report-only' 
+    
 # Publicar Artefactos HTML
 - task: PublishPipelineArtifact@1
   displayName: 'Publish Test Report'
