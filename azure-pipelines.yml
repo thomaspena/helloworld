@@ -16,6 +16,7 @@ steps:
     versionSpec: '17'
     jdkArchitectureOption: 'x64'
     jdkSourceOption: 'PreInstalled'
+
 - task: Maven@4
   inputs:
     mavenPomFile: 'pom.xml'
@@ -25,10 +26,31 @@ steps:
     mavenVersionOption: 'Default'  
     mavenAuthenticateFeed: false  
     effectivePomSkip: false 
-    sonarQubeRunAnalysis: true
+#    sonarQubeRunAnalysis: true
     sqMavenPluginVersionChoice: 'pom' 
-    goals: 'test surefire-report:report-only' 
-    
+    goals: 'test surefire-report:report-only'
+
+# Preparar análisis de SonarQube
+- task: SonarQubePrepare@6
+  inputs:
+    SonarQube: 'PruebaTecnicaSmartTalent'
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: 'PruebaTecnica_PruebaTecnica_f0e36347-390b-4884-92fc-1b5faa31d53e'
+    cliProjectName: 'PruebaTecnica'
+    cliSources: '.'
+    extraProperties: sonar.java.binaries=target/classes
+
+# Ejecutar análisis de SonarQube
+- task: SonarQubeAnalyze@6
+  inputs:
+    jdkversion: 'JAVA_HOME_17_X64'
+
+# Publicar resultados de SonarQube
+- task: SonarQubePublish@6
+  inputs:
+    pollingTimeoutSec: '300'
+
 # Publicar Artefactos HTML
 - task: PublishPipelineArtifact@1
   displayName: 'Publish Test Report'
@@ -55,20 +77,4 @@ steps:
   displayName: 'Publish Dependency Check Report'
   inputs:
     targetPath: '$(Build.SourcesDirectory)/target'
-    artifactName: 'DependencyCheckReport'   
-
-
-- task: SonarQubePrepare@6
-  inputs:
-    SonarQube: 'PruebaTecnicaSmartTalent'
-    scannerMode: 'Other'
-    extraProperties: |
-      # Additional properties that will be passed to the scanner,
-      # Put one key=value per line, example:
-      # sonar.exclusions=**/*.bin
-      sonar.host.url=https://sonarqubeappservicepruebatecnica.azurewebsites.net
-      sonar.projectKey=PruebaTecnica_PruebaTecnica_f0e36347-390b-4884-92fc-1b5faa31d53e
-      sonar.projectName=PruebaTecnica
-- task: SonarQubePublish@6
-  inputs:
-    pollingTimeoutSec: '300'
+    artifactName: 'DependencyCheckReport'
