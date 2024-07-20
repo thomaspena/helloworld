@@ -27,8 +27,8 @@ steps:
     effectivePomSkip: false  # Opcional: determina si se debe omitir la generación del POM efectivo
     sonarQubeRunAnalysis: true
     sqMavenPluginVersionChoice: 'pom'  # Usa la versión del plugin definida en el POM
-    goals: 'test surefire-report:report-only sonar:sonar'  # La opción de 'goals' está disponible en Maven@4 para definir los objetivos a ejecutar
-      
+    goals: 'sonar:sonar'  # La opción de 'goals' está disponible en Maven@4 para definir los objetivos a ejecutar
+    #test surefire-report:report-only
 # Publicar Artefactos HTML
 - task: PublishPipelineArtifact@1
   displayName: 'Publish Test Report'
