@@ -84,11 +84,15 @@ steps:
 #    extraProperties: |
 #      sonar.projectKey = PruebaTecnica_PruebaTecnica_AZDNOPrDa3Xf3DH7xVnz 
 #      sonar.projectName = PruebaTecnica
+
 - task: SonarQubePrepare@6
   inputs:
-    scannerMode: 'MSBuild'
-    projectKey: 'PruebaTecnica_PruebaTecnica_AZDNOPrDa3Xf3DH7xVnz'
-    projectName: 'PruebaTecnica'
+    SonarQube: 'PruebaTecnica'
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: 'PruebaTecnica_PruebaTecnica_AZDNOPrDa3Xf3DH7xVnz'
+    cliProjectName: 'PruebaTecnica'
+    cliSources: '.'
 - task: SonarQubeAnalyze@6
   inputs:
     jdkversion: 'JAVA_HOME_17_X64'
