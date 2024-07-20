@@ -10,7 +10,7 @@
             </activation>
             <properties>
                 <sonar.host.url>
-                  http://localhost:9000
+                  https://sonarqubeappservicepruebatecnica.azurewebsites.net
                 </sonar.host.url>
             </properties>
         </profile>
