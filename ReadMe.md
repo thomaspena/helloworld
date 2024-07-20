@@ -8,7 +8,7 @@ En esta etapa se utilizó SonarQube, ya que es de uso libre y es de fácil imple
 ### Resultados Análisis con SonarQube
 ![Analisis SonarQube](ArchivosAdjuntos/analisisSonarQube.png)
 ### Ambiente Servidor SonarQube
-![Analisis SonarQube](ArchivosAdjuntos/SonarQube.png)
+![Entorno SonarQube](ArchivosAdjuntos/SonarQube.png)
 ## **3. Etapa de análisis de dependencias con Dependency Chek**
 En esta etapa se utilizó Dependency Check ya que es de uso libre y permite el análisis de las dependencias utilizadas en la aplicación para identificar las vulnerabildades de las mismas. Se instaló la extensión de Dependency Check para la organización del Azure DevOps desde el marketplace. Se utilizaron las tareas de Maven@4, donde se especificó el uso del plugin establecido en el pom.xml de la aplicación, tambien se utilizó la tarea PublishTestResults@2 para publicar los resultados en el workspace del pipeline y adicionalmente se usó la tarea de PublishPipelineArtifact@1 para realizar la publicación del resultado del analisis de dependencias en un artefacto en el workspace del pipeline en formato HTML. (En el repositorio se encuentra el archivo de las pruebas en la carpeta de ArchivosAdjuntos)
 
@@ -16,4 +16,9 @@ En esta etapa se utilizó Dependency Check ya que es de uso libre y permite el a
 ## **4. Etapa de despliegue en entorno de prueba**
 En esta etapa se utilizó un App service llamado EntornoPrueba con SO Linux en Azure para realizar el despliegue de la aplicación, se creo un service connection Azure Resource Manager para autenticarse con el app service en el portal de Azure. Se utilizó la tarea ArchiveFiles@2 para empaquetar la aplicación en un archivo .zip, se utilizó la tarea PublishPipelineArtifact@1 para publicar el archivo empaquetado en el workspace del pipeline en un artefacto y por último, se utilizó la tarea AzureRmWebAppDeployment@4 para desplegar la aplicación empaquetada en el ambiente de prueba. En esta tarea se especificó el service connection y el nombre del entorno a desplegar.
 ### Ambiente portal Azure
- ![Analisis SonarQube](ArchivosAdjuntos/EntornoPrueba.png)
+ ![Entorno Prueba](ArchivosAdjuntos/EntornoPrueba.png)
+## **5. Resultados Ejecución del pipeline**
+Se muestra la correcta ejecución del pipeline, la generación de los artefactos y la publicación de las pruebas
+![Entorno Prueba](ArchivosAdjuntos/Ejecuciónpipeline.png)
+![Entorno Prueba](ArchivosAdjuntos/Publicacion.png)
+![Entorno Prueba](ArchivosAdjuntos/publicacionsonar.png)
