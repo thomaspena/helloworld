@@ -81,10 +81,27 @@ steps:
     artifactName: 'DependencyCheckReport'
     
 #ETAPA DESPLIEGUE ENTORNO DE PRUEBA
+# Empaquetar la aplicación en un archivo ZIP
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: 'target'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/app.zip'
+    replaceExistingArchive: true
+
+# Publicar el archivo ZIP como un artefacto
+- task: PublishPipelineArtifact@1
+  displayName: 'Publish Application ZIP'
+  inputs:
+    targetPath: '$(Build.ArtifactStagingDirectory)/app.zip'
+    artifactName: 'drop'
+
+# Desplegar en Azure App Service
 - task: AzureRmWebAppDeployment@4
   inputs:
     ConnectionType: 'AzureRM'
     azureSubscription: 'ConexionDespliegue'
     appType: 'webApp'
     WebAppName: 'EntornoPrueba'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    packageForLinux: '$(Pipeline.Workspace)/drop/app.zip'
