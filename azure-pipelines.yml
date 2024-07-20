@@ -93,6 +93,10 @@ steps:
     cliProjectKey: 'PruebaTecnica_PruebaTecnica_AZDNOPrDa3Xf3DH7xVnz'
     cliProjectName: 'PruebaTecnica'
     cliSources: '.'
+    extraProperties: |
+        sonar.host.url=http://[DIRECCION_DEL_SERVIDOR_SONARQUBE]:7000  # Asegúrate de usar la URL correcta
+        sonar.projectKey=PruebaTecnica_PruebaTecnica_AZDNOPrDa3Xf3DH7xVnz
+        sonar.projectName=PruebaTecnica
 - task: SonarQubeAnalyze@6
   inputs:
     jdkversion: 'JAVA_HOME_17_X64'
