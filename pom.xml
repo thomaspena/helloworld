@@ -27,7 +27,7 @@
         <dependency>
             <groupId>org.sonarsource.scanner.maven</groupId>
             <artifactId>sonar-maven-plugin</artifactId>
-            <version>3.10.0.2594</version>
+            <version>4.0.0.4121</version>
         </dependency>
     </dependencies>
 
@@ -52,7 +52,7 @@
              <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
-                <version>3.10.0.2594</version>
+                <version>4.0.0.4121</version>
                 <configuration>
                     <sonar.host.url>
                              https://sonarqubeappservicepruebatecnica.azurewebsites.net
