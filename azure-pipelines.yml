@@ -94,7 +94,7 @@ steps:
     cliProjectName: 'PruebaTecnica'
     cliSources: '.'
     extraProperties: |
-        sonar.host.url=http://[DIRECCION_DEL_SERVIDOR_SONARQUBE]:7000  # Asegúrate de usar la URL correcta
+        sonar.host.url=http://localhost:7000  # Asegúrate de usar la URL correcta
         sonar.projectKey=PruebaTecnica_PruebaTecnica_AZDNOPrDa3Xf3DH7xVnz
         sonar.projectName=PruebaTecnica
 - task: SonarQubeAnalyze@6
