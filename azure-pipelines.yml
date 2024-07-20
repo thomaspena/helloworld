@@ -96,6 +96,7 @@ steps:
   inputs:
     targetPath: '$(Build.ArtifactStagingDirectory)/app.zip'
     artifactName: 'drop'
+    publishLocation: 'Container'
 
 # Desplegar en Azure App Service
 - task: AzureRmWebAppDeployment@4
@@ -104,4 +105,4 @@ steps:
     azureSubscription: 'ConexionDespliegue'
     appType: 'webApp'
     WebAppName: 'EntornoPrueba'
-    packageForLinux: '$(Pipeline.Workspace)/drop/app.zip'
+    packageForLinux: '$(Build.ArtifactStagingDirectory)/*app.zip'
