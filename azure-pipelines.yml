@@ -36,7 +36,7 @@ steps:
     effectivePomSkip: false  # Opcional: determina si se debe omitir la generación del POM efectivo
 #    sonarQubeRunAnalysis: true
     sqMavenPluginVersionChoice: 'pom'  # Usa la versión del plugin definida en el POM
-    goals: 'package'  # La opción de 'goals' está disponible en Maven@4 para definir los objetivos a ejecutar
+    goals: 'test surefire-report:report-only'  # La opción de 'goals' está disponible en Maven@4 para definir los objetivos a ejecutar
 # Publicar Artefactos HTML
 - task: PublishPipelineArtifact@1
   displayName: 'Publish Test Report'
@@ -67,11 +67,11 @@ steps:
 #    jdkVersionOption: '1.8'
 #    jdkArchitectureOption: 'x64'
 #    goals: 'org.owasp:dependency-check-maven:check'
-- task: PublishPipelineArtifact@1
-  displayName: 'Publish Dependency Check Report'
-  inputs:
-    targetPath: 'target/dependency-check-report.html'
-    artifactName: 'DependencyCheckReport'
+#- task: PublishPipelineArtifact@1
+#  displayName: 'Publish Dependency Check Report'
+#  inputs:
+#    targetPath: 'target/dependency-check-report.html'
+#    artifactName: 'DependencyCheckReport'
 
 - task: SonarQubePrepare@6
   inputs:
